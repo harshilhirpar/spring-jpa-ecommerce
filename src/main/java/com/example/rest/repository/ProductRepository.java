@@ -4,6 +4,7 @@ import com.example.rest.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
     Optional<Product> findBySku(String sku);
 
@@ -117,4 +118,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             nativeQuery = true)
     int decrementStock(@Param("productId") Long productId,
                        @Param("quantity") Integer quantity);
+
+    boolean existsBySku(String sku);
+    Page<Product> findByActiveTrue(Pageable pageable);
 }
