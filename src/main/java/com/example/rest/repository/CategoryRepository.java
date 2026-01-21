@@ -38,7 +38,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "LEFT JOIN c.products p " +
             "WHERE c.id = :categoryId " +
             "GROUP BY c")
-    Object[] findCategoryWithProductCount(@Param("categoryId") Long categoryId);
+    List<Object[]> findCategoryWithProductCount(@Param("categoryId") Long categoryId);
     // Use case: Display "Laptops (42 products)"
 
     // Find categories by name containing keyword (search)
